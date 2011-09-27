@@ -24,7 +24,7 @@ class GC {
 	Val sweeping;		// list of snapshot objects to sweep
 	Val swept;		// prev of sweeping
 	Val snapshot;		// the last one to mark as white
-	Set registered;	// root set
+	Set registered;		// root set
 	Stack gray;		// gray set
 	Phase phase;
 	size_t allocated;	// object count
