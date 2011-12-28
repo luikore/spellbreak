@@ -76,7 +76,6 @@ struct TupleObj : public Obj {
 		assert(storage() > 0);
 		return (Val*)(void*)(&meta.p + 1);
 	}
-	// TODO call mark after linking elems
 };
 
 struct ArrayObj : public Obj {

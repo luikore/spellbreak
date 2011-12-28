@@ -1,0 +1,10 @@
+GEM
+  remote: http://rubygems.org/
+  specs:
+    rsec (0.4)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  rsec
