@@ -1,0 +1,6 @@
+include FileUtils
+
+desc "test"
+task :default do
+  sh "gcc *.c && ./a.out && rm ./a.out"
+end
