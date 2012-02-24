@@ -1,6 +1,23 @@
 include FileUtils
 
+file 'libutils.a' => Dir.glob('ccan/*') do
+  sh "gcc -c ccan/*.c -o ccan.o"
+  sh "ar -cr libutils.a ccan.o"
+  rm "ccan.o"
+end
+
 desc "test"
-task :default do
-  sh "gcc *.c && ./a.out && rm ./a.out"
+file 'test/test' => ['libutils.a', *Dir.glob('{test/*.c,*.h}')] do
+  sh "gcc test/*.c -I. -L. -lutils -o test/test"
+end
+
+desc "clean"
+task :clean do
+  rm_f 'libutils.a'
+  rm_f 'test/test'
+end
+
+desc "build and run test"
+task :default => 'test/test' do
+  sh "test/test"
 end
