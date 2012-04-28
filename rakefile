@@ -23,7 +23,7 @@ def wget url, dir, checksum_validate
 end
 
 desc "download vendor projects"
-task :prepare do
+task :'vendor:download' do
   cd "vendor"
   wget 'http://www.geocities.jp/kosako3/oniguruma/archive/onig-5.9.2.tar.gz',
        'onig-5.9.2',
@@ -34,4 +34,26 @@ task :prepare do
   wget 'http://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.14.tar.gz',
        'libiconv-1.14',
        'be7d67e50d72ff067b2c0291311bc283add36965'
+end
+
+task :'vendor:compile' do
+  prefix = "--prefix=\"#{File.expand_path File.dirname __FILE__}/out\""
+
+  cd "vendor/openssl-1.0.1b"
+  if RUBY_PLATFORM =~ /darwin/
+    sh "./Configure darwin64-x86_64-cc #{prefix}"
+  else
+    sh "./config #{prefix}"
+  end
+  sh "make install"
+
+  cd "../vendor/libiconv-1.14"
+  sh "./configure #{prefix}"
+  sh "make install"
+
+  cd "../vendor/onig-5.9.2"
+  sh "./configure #{prefix}"
+  sh "make install"
+
+  # NOTE xbyak not need compile
 end
